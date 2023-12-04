@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://nwf7c00xvug4"]
+
+[ext_resource type="Script" path="res://AddNodeBtn.gd" id="1_3rc7e"]
+
+[node name="NodeBtn" type="Control"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_3rc7e")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureButton" type="TextureButton" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Button"
+
+[connection signal="pressed" from="VBoxContainer/TextureButton" to="." method="insert_node"]
