@@ -1,9 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://c4ksq303e1yo2"]
+[gd_scene load_steps=12 format=3 uid="uid://c4ksq303e1yo2"]
 
 [ext_resource type="Script" path="res://nodeeditor.gd" id="1_dafuw"]
-[ext_resource type="Script" path="res://nodes/ConditionNode.gd" id="1_nrblm"]
 [ext_resource type="PackedScene" uid="uid://nwf7c00xvug4" path="res://node_btn.tscn" id="2_02rvu"]
 [ext_resource type="Script" path="res://GraphEdit.gd" id="2_ptuir"]
+[ext_resource type="Script" path="res://nodes/LookAtNode.gd" id="4_a3m8u"]
+[ext_resource type="Texture2D" uid="uid://bs51ed11d1d45" path="res://res/event.svg" id="4_cyknp"]
+[ext_resource type="Script" path="res://nodes/VecLenNode.gd" id="4_qvut4"]
+[ext_resource type="Script" path="res://nodes/VecElementNode.gd" id="5_3vrbi"]
+[ext_resource type="Texture2D" uid="uid://dwhtjslwknta" path="res://res/person.svg" id="5_8guv1"]
+[ext_resource type="Script" path="res://nodes/Node.gd" id="5_k6o80"]
+[ext_resource type="Texture2D" uid="uid://bcydpepfj14rx" path="res://res/play.svg" id="5_ngxnr"]
+[ext_resource type="Script" path="res://nodes/PersonsNode.gd" id="6_e76wd"]
 
 [node name="NodeEditor" type="Control"]
 layout_mode = 3
@@ -15,6 +22,7 @@ grow_vertical = 2
 script = ExtResource("1_dafuw")
 
 [node name="Panels" type="HSplitContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,17 +34,25 @@ grow_vertical = 2
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 
-[node name="ValueBtn" parent="Panels/BtnContainer" instance=ExtResource("2_02rvu")]
+[node name="PersonsBtn" parent="Panels/BtnContainer" instance=ExtResource("2_02rvu")]
 layout_mode = 2
-node_name = "ValueNode"
+node_name = "PersonsNode"
 
-[node name="ConditionBtn" parent="Panels/BtnContainer" instance=ExtResource("2_02rvu")]
+[node name="VecLenBtn" parent="Panels/BtnContainer" instance=ExtResource("2_02rvu")]
 layout_mode = 2
-node_name = "ConditionNode"
+node_name = "VecLenNode"
+
+[node name="VecElement" parent="Panels/BtnContainer" instance=ExtResource("2_02rvu")]
+layout_mode = 2
+node_name = "VecElementNode"
 
 [node name="DisplayBtn" parent="Panels/BtnContainer" instance=ExtResource("2_02rvu")]
 layout_mode = 2
 node_name = "DisplayNode"
+
+[node name="LookAtBtn" parent="Panels/BtnContainer" instance=ExtResource("2_02rvu")]
+layout_mode = 2
+node_name = "LookAtNode"
 
 [node name="GraphEdit" type="GraphEdit" parent="Panels"]
 layout_mode = 2
@@ -48,13 +64,199 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
+[node name="ValueNode" type="GraphNode" parent="NodesLibrary"]
+layout_mode = 0
+offset_left = 600.0
+offset_top = 93.0
+offset_right = 703.0
+offset_bottom = 179.0
+title = "VALUE"
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = true
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+
+[node name="LineEdit" type="LineEdit" parent="NodesLibrary/ValueNode"]
+layout_mode = 2
+text = "Hello"
+placeholder_text = "type..."
+
+[node name="VecLenNode" type="GraphNode" parent="NodesLibrary"]
+layout_mode = 0
+offset_left = 324.0
+offset_top = -19.0
+offset_right = 436.0
+offset_bottom = 67.0
+title = "Vector length"
+slot/0/left_enabled = true
+slot/0/left_type = 1
+slot/0/left_color = Color(0.443137, 0.188235, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = true
+slot/0/right_type = 0
+slot/0/right_color = Color(0, 0.741176, 0.164706, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+script = ExtResource("4_qvut4")
+
+[node name="LineEdit" type="Label" parent="NodesLibrary/VecLenNode"]
+layout_mode = 2
+text = "0
+"
+
+[node name="VecElementNode" type="GraphNode" parent="NodesLibrary"]
+layout_mode = 0
+offset_left = 331.0
+offset_top = 101.0
+offset_right = 450.0
+offset_bottom = 187.0
+title = "Vector element"
+slot/0/left_enabled = true
+slot/0/left_type = 1
+slot/0/left_color = Color(0.443137, 0.188235, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = true
+slot/0/right_type = 0
+slot/0/right_color = Color(0, 0.741176, 0.164706, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+script = ExtResource("5_3vrbi")
+
+[node name="ElemNum" type="SpinBox" parent="NodesLibrary/VecElementNode"]
+layout_mode = 2
+
+[node name="DisplayNode" type="GraphNode" parent="NodesLibrary"]
+layout_mode = 0
+offset_left = 713.0
+offset_top = 208.0
+offset_right = 785.0
+offset_bottom = 286.0
+title = "DISPLAY"
+slot/0/left_enabled = true
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+
+[node name="Label" type="Label" parent="NodesLibrary/DisplayNode"]
+layout_mode = 2
+
+[node name="LookAtNode" type="GraphNode" parent="NodesLibrary"]
+layout_mode = 0
+offset_left = 445.0
+offset_top = 239.0
+offset_right = 517.0
+offset_bottom = 317.0
+title = "Look at"
+slot/0/left_enabled = true
+slot/0/left_type = 5
+slot/0/left_color = Color(0.32549, 1, 0.890196, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+script = ExtResource("4_a3m8u")
+
+[node name="Label" type="Label" parent="NodesLibrary/LookAtNode"]
+layout_mode = 2
+
+[node name="PersonsNode" type="GraphNode" parent="NodesLibrary"]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 24.0
+offset_right = 210.0
+offset_bottom = 177.0
+title = "Persons"
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = true
+slot/0/right_type = 1
+slot/0/right_color = Color(0.443137, 0.188235, 1, 1)
+slot/0/right_icon = ExtResource("4_cyknp")
+slot/0/draw_stylebox = true
+slot/1/left_enabled = false
+slot/1/left_type = 0
+slot/1/left_color = Color(1, 1, 1, 1)
+slot/1/left_icon = null
+slot/1/right_enabled = true
+slot/1/right_type = 1
+slot/1/right_color = Color(0.444178, 0.189847, 1, 1)
+slot/1/right_icon = ExtResource("4_cyknp")
+slot/1/draw_stylebox = true
+slot/2/left_enabled = false
+slot/2/left_type = 0
+slot/2/left_color = Color(1, 1, 1, 1)
+slot/2/left_icon = null
+slot/2/right_enabled = true
+slot/2/right_type = 1
+slot/2/right_color = Color(0.443137, 0.188235, 1, 1)
+slot/2/right_icon = ExtResource("4_cyknp")
+slot/2/draw_stylebox = false
+slot/3/left_enabled = false
+slot/3/left_type = 0
+slot/3/left_color = Color(1, 1, 1, 1)
+slot/3/left_icon = null
+slot/3/right_enabled = true
+slot/3/right_type = 1
+slot/3/right_color = Color(0.443137, 0.188235, 1, 1)
+slot/3/right_icon = ExtResource("4_cyknp")
+slot/3/draw_stylebox = true
+slot/4/left_enabled = false
+slot/4/left_type = 0
+slot/4/left_color = Color(1, 1, 1, 1)
+slot/4/left_icon = null
+slot/4/right_enabled = true
+slot/4/right_type = 10
+slot/4/right_color = Color(0.882353, 0.721569, 0, 1)
+slot/4/right_icon = ExtResource("5_8guv1")
+slot/4/draw_stylebox = true
+script = ExtResource("6_e76wd")
+
+[node name="Label4" type="Label" parent="NodesLibrary/PersonsNode"]
+layout_mode = 2
+text = "all
+"
+
+[node name="Label" type="Label" parent="NodesLibrary/PersonsNode"]
+layout_mode = 2
+text = "in personal space
+"
+
+[node name="Label2" type="Label" parent="NodesLibrary/PersonsNode"]
+layout_mode = 2
+text = "in social space
+"
+
+[node name="Label3" type="Label" parent="NodesLibrary/PersonsNode"]
+layout_mode = 2
+text = "in public space
+"
+
+[node name="Label5" type="Label" parent="NodesLibrary/PersonsNode"]
+layout_mode = 2
+text = "new person
+"
+
 [node name="ConditionNode" type="GraphNode" parent="NodesLibrary"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 0
-offset_left = 510.0
-offset_top = 97.0
-offset_right = 609.0
-offset_bottom = 233.0
+offset_left = 789.0
+offset_top = 38.0
+offset_right = 888.0
+offset_bottom = 174.0
 mouse_filter = 1
 position_offset = Vector2(450, 220)
 title = "CONDITION"
@@ -85,7 +287,7 @@ slot/2/right_type = 0
 slot/2/right_color = Color(1, 1, 1, 1)
 slot/2/right_icon = null
 slot/2/draw_stylebox = true
-script = ExtResource("1_nrblm")
+script = ExtResource("5_k6o80")
 
 [node name="Label" type="Label" parent="NodesLibrary/ConditionNode"]
 layout_mode = 2
@@ -108,50 +310,27 @@ popup/item_3/id = 3
 layout_mode = 2
 text = "B"
 
-[node name="ValueNode" type="GraphNode" parent="NodesLibrary"]
-layout_mode = 0
-offset_left = 179.0
-offset_top = 129.0
-offset_right = 282.0
-offset_bottom = 215.0
-title = "VALUE"
-slot/0/left_enabled = false
-slot/0/left_type = 0
-slot/0/left_color = Color(1, 1, 1, 1)
-slot/0/left_icon = null
-slot/0/right_enabled = true
-slot/0/right_type = 0
-slot/0/right_color = Color(1, 1, 1, 1)
-slot/0/right_icon = null
-slot/0/draw_stylebox = true
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -58.0
+offset_top = 16.0
+offset_right = -18.0
+offset_bottom = 56.0
+grow_horizontal = 0
 
-[node name="LineEdit" type="LineEdit" parent="NodesLibrary/ValueNode"]
+[node name="PlayBtn" type="TextureButton" parent="HBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
-text = "Hello"
-placeholder_text = "type..."
-
-[node name="DisplayNode" type="GraphNode" parent="NodesLibrary"]
-layout_mode = 0
-offset_left = 713.0
-offset_top = 208.0
-offset_right = 785.0
-offset_bottom = 286.0
-title = "DISPLAY"
-slot/0/left_enabled = true
-slot/0/left_type = 0
-slot/0/left_color = Color(1, 1, 1, 1)
-slot/0/left_icon = null
-slot/0/right_enabled = false
-slot/0/right_type = 0
-slot/0/right_color = Color(1, 1, 1, 1)
-slot/0/right_icon = null
-slot/0/draw_stylebox = true
-
-[node name="Label" type="Label" parent="NodesLibrary/DisplayNode"]
-layout_mode = 2
+texture_normal = ExtResource("5_ngxnr")
+ignore_texture_size = true
+stretch_mode = 4
 
 [connection signal="connection_request" from="Panels/GraphEdit" to="Panels/GraphEdit" method="_on_connection_request"]
 [connection signal="delete_nodes_request" from="Panels/GraphEdit" to="Panels/GraphEdit" method="_on_Graph_delete_nodes_request"]
 [connection signal="disconnection_request" from="Panels/GraphEdit" to="Panels/GraphEdit" method="_on_disconnection_request"]
 [connection signal="node_deselected" from="Panels/GraphEdit" to="Panels/GraphEdit" method="_on_Graph_node_deselected"]
 [connection signal="node_selected" from="Panels/GraphEdit" to="Panels/GraphEdit" method="_on_Graph_node_selected"]
+[connection signal="pressed" from="HBoxContainer/PlayBtn" to="." method="execute_graph"]

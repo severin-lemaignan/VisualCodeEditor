@@ -1,24 +1,34 @@
-[gd_scene load_steps=2 format=3 uid="uid://nwf7c00xvug4"]
+[gd_scene load_steps=3 format=3 uid="uid://nwf7c00xvug4"]
 
 [ext_resource type="Script" path="res://AddNodeBtn.gd" id="1_3rc7e"]
+[ext_resource type="Texture2D" uid="uid://py8do044e2bp" path="res://res/node.svg" id="2_1t8kk"]
 
-[node name="NodeBtn" type="Control"]
+[node name="NodeBtn" type="CenterContainer"]
 custom_minimum_size = Vector2(50, 50)
-layout_mode = 3
-anchors_preset = 0
+anchors_preset = -1
+anchor_right = 0.055
+anchor_bottom = 0.136
+offset_right = 9.64
+offset_bottom = -2.12801
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_3rc7e")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="TextureButton" type="TextureButton" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="VBoxContainer/CenterContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture_normal = ExtResource("2_1t8kk")
+ignore_texture_size = true
+stretch_mode = 4
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 text = "Button"
 
-[connection signal="pressed" from="VBoxContainer/TextureButton" to="." method="insert_node"]
+[connection signal="pressed" from="VBoxContainer/CenterContainer/TextureButton" to="." method="insert_node"]

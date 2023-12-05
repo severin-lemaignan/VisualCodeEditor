@@ -4,7 +4,14 @@ var selected_nodes = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	
+	for t in Constants.Type:
+			add_valid_connection_type(Constants.Type[t] | Constants.Type.VECTOR, Constants.Type.VECTOR)
+			
+	for i in Constants.COMPATIBLE_PORTS_TYPE.keys():
+		for o in Constants.COMPATIBLE_PORTS_TYPE[i]:
+			add_valid_connection_type(o, i)
+	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -16,11 +23,13 @@ func _on_connection_request(from_node, from_port, to_node, to_port):
 	for con in get_connection_list():
 		if con.to_node == to_node and con.to_port == to_port:
 			return
+		
 	connect_node(from_node, from_port, to_node, to_port)
+	get_node(NodePath(to_node)).on_connected(from_node, get_node(NodePath(from_node)).get_output_port_type(from_port), to_port)
 
 func _on_disconnection_request(from_node, from_port, to_node, to_port):
 	disconnect_node(from_node, from_port, to_node, to_port)
-
+	get_node(NodePath(to_node)).on_disconnected(from_node, get_node(NodePath(from_node)).get_output_port_type(from_port), to_port)
 
 func _on_Graph_node_selected(node):
 	selected_nodes[node] = true

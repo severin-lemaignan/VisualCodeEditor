@@ -15,6 +15,10 @@ run/main_scene="res://nodeeditor.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Constants="*res://constants.gd"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

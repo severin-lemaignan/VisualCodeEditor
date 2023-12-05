@@ -7,6 +7,7 @@ extends Control
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$NodesLibrary.hide()
+	$Panels.show()
 	
 	add_part("DisplayNode")
 	add_part("ConditionNode")
@@ -70,3 +71,6 @@ func load_data(file_name):
 	else:
 		# File not found
 		pass
+
+func execute_graph():
+	print("go go go")
