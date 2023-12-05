@@ -13,10 +13,14 @@ var TypeColors = {
 	Type.ANY: Color.WHITE,
 	Type.VECTOR: Color.BLUE_VIOLET,
 	Type.BOOL: Color.CORAL,
-	Type.NUMERICAL: Color.DARK_SEA_GREEN,
+	Type.NUMERICAL: Color.FOREST_GREEN,
 	Type.STRING: Color.CORNFLOWER_BLUE,
 	Type.TF_FRAME: Color.ORANGE,
 	Type.PERSON: Color.BURLYWOOD
+}
+
+var TypeIcons = {
+	Type.PERSON: load("res://res/person.svg")
 }
 
 func is_vector(type):
@@ -29,6 +33,12 @@ func type_color(type):
 		return TypeColors[type]
 
 func type_icon(type):
+	if is_vector(type):
+		type =  type & ~Constants.Type.VECTOR
+		
+	if type in TypeIcons:
+		return TypeIcons[type]
+		
 	return null
 	
 # list possible input types for a given input port: the keys of the dictionary 

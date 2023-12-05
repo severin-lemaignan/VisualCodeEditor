@@ -7,16 +7,12 @@ func _ready():
 	super()
 
 func on_connected(from_node, from_type, on_port):
-	var type = from_type & 0b01111111
-	
-	set_slot_type_right(0, type)
-	set_slot_color_right(0, Constants.type_color(type))
+	var type = from_type & ~Constants.Type.VECTOR
 
+	set_slot(0, SLOTS[0][0], SLOTS[0][1], Constants.type_color(SLOTS[0][1]), true, type, Constants.type_color(type), Constants.type_icon(SLOTS[0][1]), Constants.type_icon(type))
+	
 func on_disconnected(from_node, from_type, on_port):
-	
-	set_slot_type_right(0, Constants.Type.ANY)
-	set_slot_color_right(0, Constants.type_color(Constants.Type.ANY))
-	
+	configure_slots()
 	
 func add_children():
 	pass
