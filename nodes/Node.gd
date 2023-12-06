@@ -5,6 +5,8 @@ var SLOTS = [
 	[false, Constants.Type.ANY, true, Constants.Type.VECTOR | Constants.Type.ANY],
 ]
 
+@export var type: String = "GraphNode"
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	add_children()
@@ -19,6 +21,14 @@ func add_children():
 	label2.text = "Slot 2"
 	add_child(label2,true)
 
+# used to serialize the node
+func get_data():
+	pass
+	
+# use to deserialize the node
+func set_data(_data):
+	pass
+	
 func on_connected(from_node, from_type, on_port):
 	pass
 	

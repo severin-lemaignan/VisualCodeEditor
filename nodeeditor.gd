@@ -4,6 +4,8 @@ extends Control
 @onready var Graph = $"VBoxContainer/Panels/GraphEdit"
 @onready var BtnContainer = $VBoxContainer/Panels/BtnContainer
 
+var filename : String = ""
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	NodesLibrary.hide()
@@ -20,6 +22,39 @@ func _ready():
 func _process(delta):
 	pass
 
+func on_menu_item(id):
+	if id == 0: # new
+		clear_graph()
+		return
+		
+	if (id == 1 and filename == "") or id == 2: # save as
+		var dialog = FileDialog.new()
+		dialog.access = FileDialog.ACCESS_FILESYSTEM
+		dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE
+		dialog.add_filter("*.res,*.tres", "Visual program (binary or text)")
+		dialog.use_native_dialog = true
+		add_child(dialog)
+		dialog.popup_centered_ratio()
+		filename = await dialog.file_selected
+		save_data(filename)
+		return
+		
+	if id == 1: # save
+		save_data(filename)
+		return
+	
+	if id == 3: # open
+		var dialog = FileDialog.new()
+		dialog.access = FileDialog.ACCESS_FILESYSTEM
+		dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
+		dialog.add_filter("*.res,*.tres", "Visual program (binary or text)") 
+		dialog.use_native_dialog = true
+		add_child(dialog)
+		dialog.popup_centered_ratio()
+		filename = await dialog.file_selected
+		load_data(filename)
+		return
+	
 func add_part(node_name: String):
 	var part: GraphNode = NodesLibrary.get_node(node_name).duplicate()
 	Graph.add_child(part, true) # Use a friendly node name to help with save/load later
@@ -29,9 +64,10 @@ func init_graph(graph_data: GraphData):
 	clear_graph()
 	for node in graph_data.nodes:
 		# Get new node from factory autoload (singleton)
-		var gnode = NodesLibrary.get_node(node.type)
-		gnode.offset = node.offset
+		var gnode = NodesLibrary.get_node(node.type).duplicate()
+		gnode.position_offset = node.offset
 		gnode.name = node.name
+		gnode.set_data(node.data)
 		Graph.add_child(gnode)
 	for con in graph_data.connections:
 		var _e = Graph.connect_node(con.from_node, con.from_port, con.to_node, con.to_port)
@@ -51,10 +87,11 @@ func save_data(file_name):
 			var node_data = NodeData.new()
 			node_data.name = node.name
 			node_data.type = node.type
-			node_data.offset = node.offset
-			node_data.data = node.data
+			node_data.offset = node.position_offset
+			node_data.data = node.get_data()
 			graph_data.nodes.append(node_data)
-	if ResourceSaver.save(graph_data, file_name) == OK:
+	var res = ResourceSaver.save(graph_data, file_name)
+	if res == OK:
 		print("saved")
 	else:
 		print("Error saving graph_data")

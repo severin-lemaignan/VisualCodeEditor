@@ -19,6 +19,16 @@ func exec(inputs):
 	
 	return [text]
 
+# used to serialize the node
+func get_data() -> String:
+	return $LineEdit.text
+	
+# use to deserialize the node
+func set_data(value):
+	$LineEdit.text = value
+	update_content_type(value)
+	
+	
 func update_content_type(text:String):
 	if text.length() == 0:
 		if SLOTS[0][3] != Constants.Type.ANY:
