@@ -23,11 +23,11 @@ func _process(delta):
 	pass
 
 func on_menu_item(id):
-	if id == 0: # new
+	if id == Constants.Actions.NEW:
 		clear_graph()
 		return
 		
-	if (id == 1 and filename == "") or id == 2: # save as
+	if (id == Constants.Actions.SAVE and filename == "") or id == Constants.Actions.SAVE_AS:
 		var dialog = FileDialog.new()
 		dialog.access = FileDialog.ACCESS_FILESYSTEM
 		dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE
@@ -39,11 +39,11 @@ func on_menu_item(id):
 		save_data(filename)
 		return
 		
-	if id == 1: # save
+	if id == Constants.Actions.SAVE:
 		save_data(filename)
 		return
 	
-	if id == 3: # open
+	if id == Constants.Actions.OPEN:
 		var dialog = FileDialog.new()
 		dialog.access = FileDialog.ACCESS_FILESYSTEM
 		dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE

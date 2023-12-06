@@ -1,5 +1,13 @@
 extends Node
 
+enum Actions {
+	NEW,
+	SAVE,
+	SAVE_AS,
+	OPEN,
+	QUIT
+}
+
 enum Type {ANY=0,
 		VECTOR     =0b10000000, 
 		BOOL       =0b00000001,

@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://c4ksq303e1yo2"]
+[gd_scene load_steps=16 format=3 uid="uid://c4ksq303e1yo2"]
 
 [ext_resource type="Script" path="res://nodeeditor.gd" id="1_dafuw"]
 [ext_resource type="Script" path="res://main.gd" id="1_qcn85"]
 [ext_resource type="PackedScene" uid="uid://nwf7c00xvug4" path="res://node_btn.tscn" id="2_02rvu"]
 [ext_resource type="Script" path="res://GraphEdit.gd" id="2_ptuir"]
+[ext_resource type="Script" path="res://MenuBar.gd" id="3_j6x1r"]
 [ext_resource type="Script" path="res://nodes/LookAtNode.gd" id="4_a3m8u"]
 [ext_resource type="Texture2D" uid="uid://bs51ed11d1d45" path="res://res/event.svg" id="4_cyknp"]
 [ext_resource type="Script" path="res://nodes/ValueNode.gd" id="4_e1hqw"]
@@ -46,24 +47,7 @@ layout_mode = 2
 
 [node name="MenuBar" type="MenuBar" parent="MainLayout/TabContainer/Visual editor/VBoxContainer"]
 layout_mode = 2
-
-[node name="Program" type="PopupMenu" parent="MainLayout/TabContainer/Visual editor/VBoxContainer/MenuBar"]
-title = "File"
-item_count = 6
-item_0/text = "New"
-item_0/id = 0
-item_1/text = ""
-item_1/id = 100
-item_1/separator = true
-item_2/text = "Save"
-item_2/id = 1
-item_3/text = "Save as..."
-item_3/id = 2
-item_4/text = ""
-item_4/id = 100
-item_4/separator = true
-item_5/text = "Open..."
-item_5/id = 3
+script = ExtResource("3_j6x1r")
 
 [node name="Panels" type="HSplitContainer" parent="MainLayout/TabContainer/Visual editor/VBoxContainer"]
 layout_mode = 2
@@ -378,7 +362,6 @@ popup/item_3/id = 3
 layout_mode = 2
 text = "B"
 
-[connection signal="id_pressed" from="MainLayout/TabContainer/Visual editor/VBoxContainer/MenuBar/Program" to="MainLayout/TabContainer/Visual editor" method="on_menu_item"]
 [connection signal="connection_request" from="MainLayout/TabContainer/Visual editor/VBoxContainer/Panels/GraphEdit" to="MainLayout/TabContainer/Visual editor/VBoxContainer/Panels/GraphEdit" method="_on_connection_request"]
 [connection signal="delete_nodes_request" from="MainLayout/TabContainer/Visual editor/VBoxContainer/Panels/GraphEdit" to="MainLayout/TabContainer/Visual editor/VBoxContainer/Panels/GraphEdit" method="_on_Graph_delete_nodes_request"]
 [connection signal="disconnection_request" from="MainLayout/TabContainer/Visual editor/VBoxContainer/Panels/GraphEdit" to="MainLayout/TabContainer/Visual editor/VBoxContainer/Panels/GraphEdit" method="_on_disconnection_request"]
