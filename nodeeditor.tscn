@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://c4ksq303e1yo2"]
+[gd_scene load_steps=15 format=3 uid="uid://c4ksq303e1yo2"]
 
 [ext_resource type="Script" path="res://nodeeditor.gd" id="1_dafuw"]
+[ext_resource type="Script" path="res://main.gd" id="1_qcn85"]
 [ext_resource type="PackedScene" uid="uid://nwf7c00xvug4" path="res://node_btn.tscn" id="2_02rvu"]
 [ext_resource type="Script" path="res://GraphEdit.gd" id="2_ptuir"]
 [ext_resource type="Script" path="res://nodes/LookAtNode.gd" id="4_a3m8u"]
@@ -9,9 +10,10 @@
 [ext_resource type="Script" path="res://nodes/VecLenNode.gd" id="4_qvut4"]
 [ext_resource type="Script" path="res://nodes/VecElementNode.gd" id="5_3vrbi"]
 [ext_resource type="Texture2D" uid="uid://dwhtjslwknta" path="res://res/person.svg" id="5_8guv1"]
-[ext_resource type="Script" path="res://nodes/Node.gd" id="5_k6o80"]
 [ext_resource type="Texture2D" uid="uid://bcydpepfj14rx" path="res://res/play.svg" id="5_ngxnr"]
 [ext_resource type="Script" path="res://nodes/PersonsNode.gd" id="6_e76wd"]
+[ext_resource type="Script" path="res://nodes/DisplayNode.gd" id="7_ualx4"]
+[ext_resource type="Script" path="res://nodes/ConditionNode.gd" id="12_81ksd"]
 
 [node name="NodeEditor" type="Control"]
 layout_mode = 3
@@ -20,9 +22,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_dafuw")
+script = ExtResource("1_qcn85")
 
-[node name="Panels" type="HSplitContainer" parent="."]
+[node name="MainLayout" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -30,45 +32,20 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BtnContainer" type="VBoxContainer" parent="Panels"]
-custom_minimum_size = Vector2(50, 0)
+[node name="TabContainer" type="TabContainer" parent="MainLayout"]
+layout_mode = 2
+size_flags_vertical = 3
+drag_to_rearrange_enabled = true
+
+[node name="Visual editor" type="PanelContainer" parent="MainLayout/TabContainer"]
+layout_mode = 2
+script = ExtResource("1_dafuw")
+
+[node name="NodesLibrary" type="Control" parent="MainLayout/TabContainer/Visual editor"]
+visible = false
 layout_mode = 2
 
-[node name="PersonsBtn" parent="Panels/BtnContainer" instance=ExtResource("2_02rvu")]
-layout_mode = 2
-node_name = "PersonsNode"
-
-[node name="VecLenBtn" parent="Panels/BtnContainer" instance=ExtResource("2_02rvu")]
-layout_mode = 2
-node_name = "VecLenNode"
-
-[node name="VecElement" parent="Panels/BtnContainer" instance=ExtResource("2_02rvu")]
-layout_mode = 2
-node_name = "VecElementNode"
-
-[node name="DisplayBtn" parent="Panels/BtnContainer" instance=ExtResource("2_02rvu")]
-layout_mode = 2
-node_name = "DisplayNode"
-
-[node name="LookAtBtn" parent="Panels/BtnContainer" instance=ExtResource("2_02rvu")]
-layout_mode = 2
-node_name = "LookAtNode"
-
-[node name="ValueBtn" parent="Panels/BtnContainer" instance=ExtResource("2_02rvu")]
-layout_mode = 2
-node_name = "ValueNode"
-
-[node name="GraphEdit" type="GraphEdit" parent="Panels"]
-layout_mode = 2
-right_disconnects = true
-script = ExtResource("2_ptuir")
-
-[node name="NodesLibrary" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="ValueNode" type="GraphNode" parent="NodesLibrary"]
+[node name="ValueNode" type="GraphNode" parent="MainLayout/TabContainer/Visual editor/NodesLibrary"]
 layout_mode = 0
 offset_left = 600.0
 offset_top = 93.0
@@ -86,12 +63,12 @@ slot/0/right_icon = null
 slot/0/draw_stylebox = true
 script = ExtResource("4_e1hqw")
 
-[node name="LineEdit" type="LineEdit" parent="NodesLibrary/ValueNode"]
+[node name="LineEdit" type="LineEdit" parent="MainLayout/TabContainer/Visual editor/NodesLibrary/ValueNode"]
 layout_mode = 2
 text = "Hello"
 placeholder_text = "type..."
 
-[node name="VecLenNode" type="GraphNode" parent="NodesLibrary"]
+[node name="VecLenNode" type="GraphNode" parent="MainLayout/TabContainer/Visual editor/NodesLibrary"]
 layout_mode = 0
 offset_left = 324.0
 offset_top = -19.0
@@ -109,12 +86,12 @@ slot/0/right_icon = null
 slot/0/draw_stylebox = true
 script = ExtResource("4_qvut4")
 
-[node name="LineEdit" type="Label" parent="NodesLibrary/VecLenNode"]
+[node name="LineEdit" type="Label" parent="MainLayout/TabContainer/Visual editor/NodesLibrary/VecLenNode"]
 layout_mode = 2
 text = "0
 "
 
-[node name="VecElementNode" type="GraphNode" parent="NodesLibrary"]
+[node name="VecElementNode" type="GraphNode" parent="MainLayout/TabContainer/Visual editor/NodesLibrary"]
 layout_mode = 0
 offset_left = 331.0
 offset_top = 101.0
@@ -132,16 +109,16 @@ slot/0/right_icon = null
 slot/0/draw_stylebox = true
 script = ExtResource("5_3vrbi")
 
-[node name="ElemNum" type="SpinBox" parent="NodesLibrary/VecElementNode"]
+[node name="ElemNum" type="SpinBox" parent="MainLayout/TabContainer/Visual editor/NodesLibrary/VecElementNode"]
 layout_mode = 2
 
-[node name="DisplayNode" type="GraphNode" parent="NodesLibrary"]
+[node name="DisplayNode" type="GraphNode" parent="MainLayout/TabContainer/Visual editor/NodesLibrary"]
 layout_mode = 0
 offset_left = 713.0
 offset_top = 208.0
 offset_right = 785.0
 offset_bottom = 286.0
-title = "DISPLAY"
+title = "Display"
 slot/0/left_enabled = true
 slot/0/left_type = 0
 slot/0/left_color = Color(1, 1, 1, 1)
@@ -151,11 +128,12 @@ slot/0/right_type = 0
 slot/0/right_color = Color(1, 1, 1, 1)
 slot/0/right_icon = null
 slot/0/draw_stylebox = true
+script = ExtResource("7_ualx4")
 
-[node name="Label" type="Label" parent="NodesLibrary/DisplayNode"]
+[node name="Label" type="Label" parent="MainLayout/TabContainer/Visual editor/NodesLibrary/DisplayNode"]
 layout_mode = 2
 
-[node name="LookAtNode" type="GraphNode" parent="NodesLibrary"]
+[node name="LookAtNode" type="GraphNode" parent="MainLayout/TabContainer/Visual editor/NodesLibrary"]
 layout_mode = 0
 offset_left = 445.0
 offset_top = 239.0
@@ -173,10 +151,10 @@ slot/0/right_icon = null
 slot/0/draw_stylebox = true
 script = ExtResource("4_a3m8u")
 
-[node name="Label" type="Label" parent="NodesLibrary/LookAtNode"]
+[node name="Label" type="Label" parent="MainLayout/TabContainer/Visual editor/NodesLibrary/LookAtNode"]
 layout_mode = 2
 
-[node name="PersonsNode" type="GraphNode" parent="NodesLibrary"]
+[node name="PersonsNode" type="GraphNode" parent="MainLayout/TabContainer/Visual editor/NodesLibrary"]
 layout_mode = 0
 offset_left = 39.0
 offset_top = 24.0
@@ -230,32 +208,32 @@ slot/4/right_icon = ExtResource("5_8guv1")
 slot/4/draw_stylebox = true
 script = ExtResource("6_e76wd")
 
-[node name="Label4" type="Label" parent="NodesLibrary/PersonsNode"]
+[node name="Label4" type="Label" parent="MainLayout/TabContainer/Visual editor/NodesLibrary/PersonsNode"]
 layout_mode = 2
 text = "all
 "
 
-[node name="Label" type="Label" parent="NodesLibrary/PersonsNode"]
+[node name="Label" type="Label" parent="MainLayout/TabContainer/Visual editor/NodesLibrary/PersonsNode"]
 layout_mode = 2
 text = "in personal space
 "
 
-[node name="Label2" type="Label" parent="NodesLibrary/PersonsNode"]
+[node name="Label2" type="Label" parent="MainLayout/TabContainer/Visual editor/NodesLibrary/PersonsNode"]
 layout_mode = 2
 text = "in social space
 "
 
-[node name="Label3" type="Label" parent="NodesLibrary/PersonsNode"]
+[node name="Label3" type="Label" parent="MainLayout/TabContainer/Visual editor/NodesLibrary/PersonsNode"]
 layout_mode = 2
 text = "in public space
 "
 
-[node name="Label5" type="Label" parent="NodesLibrary/PersonsNode"]
+[node name="Label5" type="Label" parent="MainLayout/TabContainer/Visual editor/NodesLibrary/PersonsNode"]
 layout_mode = 2
 text = "new person
 "
 
-[node name="ConditionNode" type="GraphNode" parent="NodesLibrary"]
+[node name="ConditionNode" type="GraphNode" parent="MainLayout/TabContainer/Visual editor/NodesLibrary"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 0
 offset_left = 789.0
@@ -264,7 +242,7 @@ offset_right = 888.0
 offset_bottom = 174.0
 mouse_filter = 1
 position_offset = Vector2(450, 220)
-title = "CONDITION"
+title = "Condition"
 slot/0/left_enabled = true
 slot/0/left_type = 0
 slot/0/left_color = Color(1, 1, 1, 1)
@@ -292,13 +270,13 @@ slot/2/right_type = 0
 slot/2/right_color = Color(1, 1, 1, 1)
 slot/2/right_icon = null
 slot/2/draw_stylebox = true
-script = ExtResource("5_k6o80")
+script = ExtResource("12_81ksd")
 
-[node name="Label" type="Label" parent="NodesLibrary/ConditionNode"]
+[node name="Label" type="Label" parent="MainLayout/TabContainer/Visual editor/NodesLibrary/ConditionNode"]
 layout_mode = 2
 text = "A"
 
-[node name="OptionButton" type="OptionButton" parent="NodesLibrary/ConditionNode"]
+[node name="OptionButton" type="OptionButton" parent="MainLayout/TabContainer/Visual editor/NodesLibrary/ConditionNode"]
 layout_mode = 2
 item_count = 4
 selected = 0
@@ -311,32 +289,86 @@ popup/item_2/id = 2
 popup/item_3/text = "!="
 popup/item_3/id = 3
 
-[node name="Label2" type="Label" parent="NodesLibrary/ConditionNode"]
+[node name="Label2" type="Label" parent="MainLayout/TabContainer/Visual editor/NodesLibrary/ConditionNode"]
 layout_mode = 2
 text = "B"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainLayout/TabContainer/Visual editor"]
+layout_mode = 2
+
+[node name="MenuBar" type="MenuBar" parent="MainLayout/TabContainer/Visual editor/VBoxContainer"]
+layout_mode = 2
+
+[node name="Program" type="PopupMenu" parent="MainLayout/TabContainer/Visual editor/VBoxContainer/MenuBar"]
+title = "File"
+item_count = 3
+item_0/text = "New"
+item_0/id = 0
+item_1/text = "Save"
+item_1/id = 1
+item_2/text = "Open"
+item_2/id = 2
+
+[node name="Panels" type="HSplitContainer" parent="MainLayout/TabContainer/Visual editor/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BtnContainer" type="VBoxContainer" parent="MainLayout/TabContainer/Visual editor/VBoxContainer/Panels"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="PersonsBtn" parent="MainLayout/TabContainer/Visual editor/VBoxContainer/Panels/BtnContainer" instance=ExtResource("2_02rvu")]
+layout_mode = 2
+node_name = "PersonsNode"
+
+[node name="VecLenBtn" parent="MainLayout/TabContainer/Visual editor/VBoxContainer/Panels/BtnContainer" instance=ExtResource("2_02rvu")]
+layout_mode = 2
+node_name = "VecLenNode"
+
+[node name="VecElement" parent="MainLayout/TabContainer/Visual editor/VBoxContainer/Panels/BtnContainer" instance=ExtResource("2_02rvu")]
+layout_mode = 2
+node_name = "VecElementNode"
+
+[node name="DisplayBtn" parent="MainLayout/TabContainer/Visual editor/VBoxContainer/Panels/BtnContainer" instance=ExtResource("2_02rvu")]
+layout_mode = 2
+node_name = "DisplayNode"
+
+[node name="LookAtBtn" parent="MainLayout/TabContainer/Visual editor/VBoxContainer/Panels/BtnContainer" instance=ExtResource("2_02rvu")]
+layout_mode = 2
+node_name = "LookAtNode"
+
+[node name="ValueBtn" parent="MainLayout/TabContainer/Visual editor/VBoxContainer/Panels/BtnContainer" instance=ExtResource("2_02rvu")]
+layout_mode = 2
+node_name = "ValueNode"
+
+[node name="GraphEdit" type="GraphEdit" parent="MainLayout/TabContainer/Visual editor/VBoxContainer/Panels"]
+layout_mode = 2
+scroll_offset = Vector2(-26, -442)
+right_disconnects = true
+script = ExtResource("2_ptuir")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainLayout/TabContainer/Visual editor/VBoxContainer/Panels/GraphEdit"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -58.0
-offset_top = 16.0
-offset_right = -18.0
-offset_bottom = 56.0
+offset_left = -70.0
+offset_top = 19.0
+offset_right = -30.0
+offset_bottom = 72.0
 grow_horizontal = 0
 
-[node name="PlayBtn" type="TextureButton" parent="HBoxContainer"]
+[node name="PlayBtn" type="TextureButton" parent="MainLayout/TabContainer/Visual editor/VBoxContainer/Panels/GraphEdit/HBoxContainer"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 texture_normal = ExtResource("5_ngxnr")
 ignore_texture_size = true
 stretch_mode = 4
 
-[connection signal="connection_request" from="Panels/GraphEdit" to="Panels/GraphEdit" method="_on_connection_request"]
-[connection signal="delete_nodes_request" from="Panels/GraphEdit" to="Panels/GraphEdit" method="_on_Graph_delete_nodes_request"]
-[connection signal="disconnection_request" from="Panels/GraphEdit" to="Panels/GraphEdit" method="_on_disconnection_request"]
-[connection signal="node_deselected" from="Panels/GraphEdit" to="Panels/GraphEdit" method="_on_Graph_node_deselected"]
-[connection signal="node_selected" from="Panels/GraphEdit" to="Panels/GraphEdit" method="_on_Graph_node_selected"]
-[connection signal="text_changed" from="NodesLibrary/ValueNode/LineEdit" to="NodesLibrary/ValueNode" method="update_content_type"]
-[connection signal="pressed" from="HBoxContainer/PlayBtn" to="." method="execute_graph"]
+[connection signal="text_changed" from="MainLayout/TabContainer/Visual editor/NodesLibrary/ValueNode/LineEdit" to="MainLayout/TabContainer/Visual editor/NodesLibrary/ValueNode" method="update_content_type"]
+[connection signal="connection_request" from="MainLayout/TabContainer/Visual editor/VBoxContainer/Panels/GraphEdit" to="MainLayout/TabContainer/Visual editor/VBoxContainer/Panels/GraphEdit" method="_on_connection_request"]
+[connection signal="delete_nodes_request" from="MainLayout/TabContainer/Visual editor/VBoxContainer/Panels/GraphEdit" to="MainLayout/TabContainer/Visual editor/VBoxContainer/Panels/GraphEdit" method="_on_Graph_delete_nodes_request"]
+[connection signal="disconnection_request" from="MainLayout/TabContainer/Visual editor/VBoxContainer/Panels/GraphEdit" to="MainLayout/TabContainer/Visual editor/VBoxContainer/Panels/GraphEdit" method="_on_disconnection_request"]
+[connection signal="node_deselected" from="MainLayout/TabContainer/Visual editor/VBoxContainer/Panels/GraphEdit" to="MainLayout/TabContainer/Visual editor/VBoxContainer/Panels/GraphEdit" method="_on_Graph_node_deselected"]
+[connection signal="node_selected" from="MainLayout/TabContainer/Visual editor/VBoxContainer/Panels/GraphEdit" to="MainLayout/TabContainer/Visual editor/VBoxContainer/Panels/GraphEdit" method="_on_Graph_node_selected"]
+[connection signal="pressed" from="MainLayout/TabContainer/Visual editor/VBoxContainer/Panels/GraphEdit/HBoxContainer/PlayBtn" to="." method="execute_graph"]

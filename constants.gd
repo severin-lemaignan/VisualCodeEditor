@@ -46,3 +46,10 @@ func type_icon(type):
 # to this input port.
 # Connection of matching types are implicit and do not need to be specified.
 var COMPATIBLE_PORTS_TYPE = {Type.TF_FRAME: [Type.PERSON]}
+
+func nb_outputs(slots):
+	var nb = 0
+	for s in slots:
+		if s[2]:
+			nb += 1
+	return nb

@@ -1,13 +1,12 @@
 extends Control
 
-@onready var NodeLibrary = $NodesLibrary
-@onready var Graph = $Panels/GraphEdit
-@onready var BtnContainer = $Panels/BtnContainer
+@onready var NodesLibrary = $NodesLibrary
+@onready var Graph = $"VBoxContainer/Panels/GraphEdit"
+@onready var BtnContainer = $VBoxContainer/Panels/BtnContainer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$NodesLibrary.hide()
-	$Panels.show()
+	NodesLibrary.hide()
 	
 	add_part("DisplayNode")
 	add_part("ConditionNode")
@@ -22,7 +21,7 @@ func _process(delta):
 	pass
 
 func add_part(node_name: String):
-	var part: GraphNode = NodeLibrary.get_node(node_name).duplicate()
+	var part: GraphNode = NodesLibrary.get_node(node_name).duplicate()
 	Graph.add_child(part, true) # Use a friendly node name to help with save/load later
 	part.position_offset.x = get_viewport().get_mouse_position().x
 
@@ -30,7 +29,7 @@ func init_graph(graph_data: GraphData):
 	clear_graph()
 	for node in graph_data.nodes:
 		# Get new node from factory autoload (singleton)
-		var gnode = NodeLibrary.get_node(node.type)
+		var gnode = NodesLibrary.get_node(node.type)
 		gnode.offset = node.offset
 		gnode.name = node.name
 		Graph.add_child(gnode)

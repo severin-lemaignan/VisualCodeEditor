@@ -7,6 +7,7 @@ func _ready():
 	
 	for t in Constants.Type:
 			add_valid_connection_type(Constants.Type[t] | Constants.Type.VECTOR, Constants.Type.VECTOR)
+			add_valid_connection_type(Constants.Type[t], Constants.Type.ANY)
 			
 	for i in Constants.COMPATIBLE_PORTS_TYPE.keys():
 		for o in Constants.COMPATIBLE_PORTS_TYPE[i]:

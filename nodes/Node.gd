@@ -24,8 +24,13 @@ func on_connected(from_node, from_type, on_port):
 	
 func on_disconnected(from_node, from_type, on_port):
 	pass
-	
+
+func exec(inputs):
+	# nodes must return as many output values as their number of output ports
+	return [null] * Constants.nb_outputs(SLOTS)
+
 func configure_slots():
+	clear_all_slots()
 	var idx = 0
 	for slot in SLOTS:
 		set_slot(idx,slot[0], slot[1], Constants.type_color(slot[1]),slot[2], slot[3], Constants.type_color(slot[3]),Constants.type_icon(slot[1]), Constants.type_icon(slot[3]))
